@@ -7,6 +7,5 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 DEBUG = os.getenv("DEBUG")
+ADMIN_ID = os.getenv("ADMIN_ID")
 
-print(f"Token: {TOKEN}")
-print(f"Debug mode: {DEBUG}")
