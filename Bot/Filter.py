@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import Command, CommandObject
 from aiogram.types import Message
 from Config import ADMIN_ID
-
+from API import client_call
 import re
 
 FR = Router()
@@ -23,7 +23,8 @@ async def name_filter_def(message: Message, command: CommandObject):
 
 @FR.message()
 async def check_message(message: Message):
-    user_vacancy = vacancies.get(message.from_user.id)
+    text_message = await client_call()
+    user_vacancy = text_message
 
     if user_vacancy:
         text = message.text.strip()
