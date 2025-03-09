@@ -2,26 +2,35 @@ import logging
 import asyncio
 import re
 from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Filter
+from aiogram.types import Message
 from Config import TOKEN
 
+# Настройка логирования
 logging.basicConfig(
     format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s] %(message)s',
     level=logging.INFO
 )
 
+# Инициализация бота и диспетчера
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 
-async def main():
-    await dp.start_polling(bot)
+# Фильтр для поиска вакансий
+class VacancyFilter(Filter):
+    async def __call__(self, message: Message) -> bool:
+        """
+        Фильтр, который проверяет, содержит ли сообщение ключевые слова о вакансиях.
+        """
+        # Ключевые слова для поиска
+        keywords = ["вакансия", "работа", "зарплата", "ищем"]
+        text = message.text.lower()
+        return any(keyword in text for keyword in keywords)
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
-
-
-def extract_vacancy_info(text):
+# Асинхронная функция для извлечения информации о вакансиях
+async def extract_vacancy_info(text: str) -> list[dict]:
     """
     Извлекает информацию о вакансии из текста.
     :param text: Текст сообщения.
@@ -57,10 +66,11 @@ def extract_vacancy_info(text):
     return vacancies
 
 
-@dp.message()  # Обработчик для всех сообщений
+# Обработчик для сообщений с вакансиями
+@dp.message(VacancyFilter())  # Применяем фильтр
 async def handle_group_message(message: types.Message):
     # Извлекаем информацию о вакансиях из сообщения
-    vacancies = extract_vacancy_info(message.text)
+    vacancies = await extract_vacancy_info(message.text)
 
     if vacancies:
         for vacancy in vacancies:
@@ -76,3 +86,12 @@ async def handle_group_message(message: types.Message):
             await message.answer(response)
     else:
         await message.answer("Вакансии в сообщении не найдены.")
+
+
+# Запуск бота
+async def main():
+    await dp.start_polling(bot)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
