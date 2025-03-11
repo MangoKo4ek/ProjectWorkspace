@@ -26,7 +26,7 @@ async def check_message(message: Message):
     user_vacancy = vacancies.get(message.from_user.id)
 
     if user_vacancy:
-        text_message = message.text.strip()
+        text_message = text_message.strip()
 
         vacancy_blocks = text_message.split("\n\n")
 
