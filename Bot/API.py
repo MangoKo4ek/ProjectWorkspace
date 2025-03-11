@@ -12,15 +12,10 @@ client = TelegramClient(r"C:\Users\user\PycharmProjects\ProjectWorkspace\Bot\you
 async def client_call():
     client.start(phone_number)
 
-    username = '@careernitumisis'  # Канал
-    dp = await client.get_entity(username)  # Получаем сущность канала
+    ch_id = '@careernitumisis'  # Канал
+    dp = await client.get_entity(ch_id)  # Получаем сущность канала
 
     # Получаем последнее сообщение
-    messages = await client.get_message_history(dp, limit=1)  # Получаем одно сообщение
-    text_message = messages[0].text  # Получаем текст первого сообщения из списка
+    message = await client.get_messages(dp, limit=1)
+    return message
 
-    # Отключаемся от клиента
-    await client.disconnect()
-
-    # Возвращаем текстовое сообщение для дальнейшего использования
-    return text_message
