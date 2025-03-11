@@ -1,21 +1,21 @@
-from aiogram import types, Dispatcher
+from aiogram import types, Router
 from function import func
 
-dp = Dispatcher()
+rt = Router()
 
-@dp.message()  
+@rt.message()
 async def handler(message: types.Message):
     
     vcs = func(message.text)
 
     if vcs:
         for vc in vcs:
-            response = (
+            mes = (
                 f"📌 Вакансия: {vc['title']}\n"
                 f"💸 Зарплата: {vc['salary']}\n"
                 f"📧 Контакты: {vc['contacts']}\n"
-                f"📄 Описание:\n{vc['description']}"
+                f"📄 Описание: {vc['description']}"
             )
 
             
-            await message.answer(response)
+            await message.answer(mes)

@@ -5,11 +5,13 @@ def func(text): #
     vcs = []
 
     for b in bs:
-        m = re.search(r"^(.+?)\n", b)
-        if m:
-            title = m.group(1).strip()
+        m1 = re.search(r"^(.+?)\n", b)
+        if m1:
+            title = m1.group(1).strip()
+        else:
+            title = ""
 
-        m2 = re.search(r"зарплат[а-я]*\s*[:–-]?\s*([\d\s₽руб\.]+)", b, re.IGNORECASE)
+        m2 = re.search(r"зарплат[а-я]*\s*[:–-]?\s*([\d\s₽руб.]+)", b, re.IGNORECASE)
         if m2:
             salary = m2.group(1).strip()
         else:
