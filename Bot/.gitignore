@@ -1,0 +1,6 @@
+
+requirements.txt
+LICENSE
+__pycache__
+your_account.session
+*.env

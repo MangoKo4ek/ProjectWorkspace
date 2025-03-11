@@ -1,5 +1,6 @@
 from telethon import TelegramClient
 from Config import API_HASH, API_ID, PHONE_NUMBER
+
 api_id = API_ID
 api_hash = API_HASH
 phone_number = PHONE_NUMBER
@@ -9,7 +10,7 @@ phone_number = PHONE_NUMBER
 client = TelegramClient(r"C:\Users\user\PycharmProjects\ProjectWorkspace\Bot\your_account.session", api_id, api_hash)
 
 
-async def client_call():
+async def client_call():  # функция просмотра сообщений из канала
     client.start(phone_number)
 
     ch_id = '@careernitumisis'  # Канал

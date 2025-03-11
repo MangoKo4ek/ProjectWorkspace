@@ -7,16 +7,17 @@ import re
 
 FR = Router()
 
-vacancies = {}
+vacancies = {}  # словарь для аргумента имени
 
 
-@FR.message(Command('add_vac_name'))
+@FR.message(Command('add_vac_name'))  # функция получения аргумента имени
 async def name_filter_def(message: Message, command: CommandObject):
     command_args = command.args
     if command_args:
 
         vacancies[message.from_user.id] = command_args
-        await message.answer(f'установлено значение аргумента имени как "{command_args}"')
+        await message.answer(
+            f'установлено значение аргумента имени как "{command_args}"')  # создание словаря с ID пользователя и аргумента
     else:
         await message.answer(f'воспользуйтесь командой /add_vac_name в формате: "/add_vac_name Название_Вакансии"')
 
