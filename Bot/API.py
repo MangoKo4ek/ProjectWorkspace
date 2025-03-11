@@ -1,8 +1,8 @@
 from telethon import TelegramClient
-
-api_id = 28243082  # API ID (получается при регистрации приложения на my.telegram.org)
-api_hash = "a0a4287ff4b24a83c9cb4c2555339641"  # API Hash (оттуда же)
-phone_number = "+79065027086"  # Номер телефона аккаунта, с которого будет выполняться код
+from Config import API_HASH, API_ID, PHONE_NUMBER
+api_id = API_ID
+api_hash = API_HASH
+phone_number = PHONE_NUMBER
 
 # Необходимо предварительно авторизоваться, чтобы был создан файл second_account,
 # содержащий данные об аутентификации клиента.
@@ -18,4 +18,3 @@ async def client_call():
     # Получаем последнее сообщение
     message = await client.get_messages(dp, limit=1)
     return message
-
